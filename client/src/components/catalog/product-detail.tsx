@@ -1,8 +1,9 @@
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { formatPrice, Product } from "@/lib/utils";
-import { X } from "lucide-react";
-import { useCart } from "@/components/cart/cart-context";
+import { X, ShoppingCart, CreditCard } from "lucide-react";
+import { useState } from "react";
+import { useLocation } from "wouter";
 
 interface ProductDetailProps {
   product: Product | null;
@@ -12,18 +13,23 @@ interface ProductDetailProps {
 }
 
 export function ProductDetail({ product, isOpen, onClose, relatedProducts }: ProductDetailProps) {
-  const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+  const [_, navigate] = useLocation();
   
   if (!product) return null;
   
-  const handleAddToCart = () => {
-    addToCart({
+  const handleAchatImmediat = () => {
+    // Stocker l'article dans le localStorage pour la page de checkout
+    const cartItem = {
       id: product.id,
       name: product.name,
       price: product.price,
-      quantity: 1,
+      quantity: quantity,
       image: product.image
-    });
+    };
+    
+    localStorage.setItem('checkout_item', JSON.stringify(cartItem));
+    navigate('/checkout');
   };
   
   return (
@@ -134,11 +140,43 @@ export function ProductDetail({ product, isOpen, onClose, relatedProducts }: Pro
               </DialogDescription>
             </div>
             
+            {/* Quantity Selector */}
+            <div className="mt-6">
+              <h4 className="font-medium text-lg text-gray-900 dark:text-white mb-2">Quantité</h4>
+              <div className="flex items-center space-x-3">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  disabled={quantity <= 1}
+                >
+                  -
+                </Button>
+                <span className="w-8 text-center">{quantity}</span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  +
+                </Button>
+              </div>
+            </div>
+            
             <DialogFooter className="mt-8 flex flex-col space-y-3">
-              <Button onClick={handleAddToCart} className="w-full">
-                Ajouter au panier
+              <Button 
+                className="w-full" 
+                onClick={handleAchatImmediat}
+                size="lg"
+              >
+                <CreditCard className="h-5 w-5 mr-2" />
+                Acheter maintenant - {formatPrice(product.price * quantity)}
               </Button>
-              <Button variant="outline" onClick={onClose} className="w-full text-gray-700 dark:text-gray-300">
+              <Button 
+                variant="outline" 
+                onClick={onClose} 
+                className="w-full text-gray-700 dark:text-gray-300"
+              >
                 Retour au catalogue
               </Button>
             </DialogFooter>

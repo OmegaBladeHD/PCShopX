@@ -1,22 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/utils";
-import { useCart } from "@/components/cart/cart-context";
 import { PageTitle } from "@/components/ui/page-title";
 import { useToast } from "@/hooks/use-toast";
 
+type CheckoutItem = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image?: string;
+};
+
 export default function Checkout() {
   const [location, navigate] = useLocation();
-  const { cart, totalPrice, clearCart } = useCart();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [items, setItems] = useState<CheckoutItem[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  // Si le panier est vide, rediriger vers la page d'accueil
-  if (cart.length === 0 && !showVideo) {
-    navigate("/");
+  useEffect(() => {
+    // Récupérer l'article du localStorage
+    const checkoutItemStr = localStorage.getItem('checkout_item');
+    
+    if (checkoutItemStr) {
+      try {
+        const checkoutItem = JSON.parse(checkoutItemStr) as CheckoutItem;
+        setItems([checkoutItem]);
+        setTotalPrice(checkoutItem.price * checkoutItem.quantity);
+      } catch (e) {
+        console.error("Erreur lors de la lecture du localStorage:", e);
+        navigate("/");
+      }
+    } else {
+      // Si pas d'article dans le localStorage et pas en mode vidéo, rediriger vers l'accueil
+      if (!showVideo) {
+        navigate("/");
+      }
+    }
+  }, [navigate, showVideo]);
+
+  // Si aucun article et pas en mode vidéo, ne rien afficher pendant la redirection
+  if (items.length === 0 && !showVideo) {
     return null;
   }
 
@@ -27,7 +55,8 @@ export default function Checkout() {
     setTimeout(() => {
       setIsLoading(false);
       setShowVideo(true);
-      clearCart();
+      // Nettoyer le localStorage
+      localStorage.removeItem('checkout_item');
     }, 1500);
   };
 
@@ -35,7 +64,7 @@ export default function Checkout() {
     setShowVideo(false);
     toast({
       title: "Merci pour votre visite !",
-      description: "Cette boutique est une démo 😉"
+      description: "Cette boutique est une démo"
     });
     navigate("/");
   };
@@ -53,7 +82,7 @@ export default function Checkout() {
               
               <div className="bg-white dark:bg-dark-light rounded-lg shadow p-6">
                 <ul className="divide-y space-y-4">
-                  {cart.map((item) => (
+                  {items.map((item) => (
                     <li key={item.id} className="pt-4 first:pt-0 flex justify-between">
                       <div>
                         <p className="font-medium">{item.name}</p>
