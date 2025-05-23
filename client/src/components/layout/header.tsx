@@ -2,20 +2,23 @@ import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User } from "lucide-react";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { useCart } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth";
 
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   onLoginClick?: () => void;
+  isLoggedIn?: boolean;
 }
 
-export function Header({ activeTab, setActiveTab, onLoginClick }: HeaderProps) {
+export function Header({ activeTab, setActiveTab, onLoginClick, isLoggedIn }: HeaderProps) {
   const [_, navigate] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { cart, updateQuantity, removeFromCart, clearCart, totalPrice } = useCart();
+  const { logOut } = useFirebaseAuth();
   
   const navItems = [
     { name: "Accueil", path: "/", tab: "catalogue" },
@@ -33,6 +36,10 @@ export function Header({ activeTab, setActiveTab, onLoginClick }: HeaderProps) {
     if (onLoginClick) {
       onLoginClick();
     }
+  };
+  
+  const handleLogoutClick = async () => {
+    await logOut();
   };
 
   return (
@@ -59,14 +66,25 @@ export function Header({ activeTab, setActiveTab, onLoginClick }: HeaderProps) {
           {/* User Actions */}
           <div className="flex items-center">
             <div className="flex-shrink-0 relative flex items-center space-x-2">
-              <Button 
-                onClick={handleLoginClick} 
-                size="sm"
-                variant="outline"
-              >
-                <User className="h-5 w-5 mr-2" />
-                Connexion
-              </Button>
+              {isLoggedIn ? (
+                <Button 
+                  onClick={handleLogoutClick} 
+                  size="sm"
+                  variant="outline"
+                >
+                  <LogOut className="h-5 w-5 mr-2" />
+                  Déconnexion
+                </Button>
+              ) : (
+                <Button 
+                  onClick={handleLoginClick} 
+                  size="sm"
+                  variant="outline"
+                >
+                  <User className="h-5 w-5 mr-2" />
+                  Connexion
+                </Button>
+              )}
               
               <CartDrawer
                 cart={cart}
