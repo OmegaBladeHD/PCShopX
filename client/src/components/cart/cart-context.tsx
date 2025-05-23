@@ -18,7 +18,7 @@ const initialCartContext: CartContextType = {
   addToCart: () => {},
   removeFromCart: () => {},
   updateQuantity: () => {},
-  clearCart: () => {},
+  clearCart: async () => Promise.resolve(),
   totalItems: 0,
   totalPrice: 0
 };
