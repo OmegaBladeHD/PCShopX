@@ -2,20 +2,20 @@ import { useState } from "react";
 import { useLocation, Link } from "wouter";
 import { Logo } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, ShoppingBag } from "lucide-react";
-import { AuthModal } from "@/components/auth/auth-modal";
+import { Menu, X, User } from "lucide-react";
 import { useCart } from "@/components/cart/cart-context";
+import { CartDrawer } from "@/components/cart/cart-drawer";
 
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onLoginClick?: () => void;
 }
 
-export function Header({ activeTab, setActiveTab }: HeaderProps) {
+export function Header({ activeTab, setActiveTab, onLoginClick }: HeaderProps) {
   const [_, navigate] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const { cart } = useCart();
+  const { cart, updateQuantity, removeFromCart, clearCart, totalPrice } = useCart();
   
   const navItems = [
     { name: "Accueil", path: "/", tab: "catalogue" },
@@ -27,6 +27,12 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
     navigate(path);
     setActiveTab(tab);
     setMobileMenuOpen(false);
+  };
+
+  const handleLoginClick = () => {
+    if (onLoginClick) {
+      onLoginClick();
+    }
   };
 
   return (
@@ -52,25 +58,23 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
           </div>
           {/* User Actions */}
           <div className="flex items-center">
-            <div className="flex-shrink-0 relative">
+            <div className="flex-shrink-0 relative flex items-center space-x-2">
               <Button 
-                onClick={() => setShowAuthModal(true)} 
-                className="mr-3" 
+                onClick={handleLoginClick} 
                 size="sm"
+                variant="outline"
               >
                 <User className="h-5 w-5 mr-2" />
                 Connexion
               </Button>
               
-              <button className="relative inline-flex items-center px-2 py-2 border border-transparent text-sm font-medium rounded-md text-primary dark:text-primary-dark hover:bg-gray-100 dark:hover:bg-dark transition-colors focus:outline-none">
-                <span className="sr-only">Panier</span>
-                <ShoppingBag className="h-6 w-6" />
-                {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-accent text-white text-xs flex items-center justify-center">
-                    {cart.length}
-                  </span>
-                )}
-              </button>
+              <CartDrawer
+                cart={cart}
+                updateQuantity={updateQuantity}
+                removeFromCart={removeFromCart}
+                clearCart={clearCart}
+                totalPrice={totalPrice}
+              />
             </div>
             
             {/* Mobile menu button */}
@@ -128,9 +132,6 @@ export function Header({ activeTab, setActiveTab }: HeaderProps) {
           </div>
         </div>
       )}
-
-      {/* Auth Modal */}
-      <AuthModal showModal={showAuthModal} setShowModal={setShowAuthModal} />
     </header>
   );
 }

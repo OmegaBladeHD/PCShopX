@@ -1,6 +1,9 @@
 import { formatPrice, Product } from "@/lib/utils";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ShoppingCart, Search } from "lucide-react";
+import { useCart } from "@/components/cart/cart-context";
+import { useToast } from "@/hooks/use-toast";
 
 interface ProductCardProps {
   product: Product;
@@ -8,6 +11,24 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onViewDetails }: ProductCardProps) {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+      image: product.image
+    });
+    
+    toast({
+      title: "Produit ajouté au panier",
+      description: `${product.name} a été ajouté au panier`,
+    });
+  };
+
   return (
     <Card className="bg-white dark:bg-dark rounded-lg card-shadow card-shadow-hover transition-shadow duration-300 overflow-hidden group h-full flex flex-col">
       <div className="relative pt-[56.25%] bg-gray-100 dark:bg-gray-800 overflow-hidden">
@@ -35,12 +56,21 @@ export function ProductCard({ product, onViewDetails }: ProductCardProps) {
           </p>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-4 pt-0 flex gap-2">
         <Button 
-          className="w-full" 
+          className="flex-1" 
+          variant="outline"
           onClick={() => onViewDetails(product)}
         >
-          Voir détails
+          <Search className="h-4 w-4 mr-2" />
+          Détails
+        </Button>
+        <Button 
+          className="flex-1"
+          onClick={handleAddToCart}
+        >
+          <ShoppingCart className="h-4 w-4 mr-2" />
+          Ajouter
         </Button>
       </CardFooter>
     </Card>
