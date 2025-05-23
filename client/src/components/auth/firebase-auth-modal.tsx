@@ -122,7 +122,7 @@ export function FirebaseAuthModal({ showModal, setShowModal }: FirebaseAuthModal
                   onClick={handleGoogleSignIn}
                   disabled={loading}
                 >
-                  <Google className="mr-2 h-4 w-4" />
+                  <FcGoogle className="mr-2 h-4 w-4" />
                   Google
                 </Button>
               </form>
@@ -179,7 +179,7 @@ export function FirebaseAuthModal({ showModal, setShowModal }: FirebaseAuthModal
                   onClick={handleGoogleSignIn}
                   disabled={loading}
                 >
-                  <Google className="mr-2 h-4 w-4" />
+                  <FcGoogle className="mr-2 h-4 w-4" />
                   Google
                 </Button>
               </form>
