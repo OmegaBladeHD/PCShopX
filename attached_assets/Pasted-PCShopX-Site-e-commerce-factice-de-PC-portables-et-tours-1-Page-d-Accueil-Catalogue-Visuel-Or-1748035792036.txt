@@ -1,0 +1,197 @@
+PCShopX — Site e-commerce factice de PC portables et tours
+1. Page d’Accueil / Catalogue
+Visuel & Organisation
+Header (en-tête) :
+
+En haut à gauche : logo stylisé + nom du site “PCShopX” (logo simple, moderne, style gaming)
+
+En haut au centre : menu horizontal clair avec 3 onglets principaux
+
+Accueil (catalogue)
+
+Configuration PC
+
+Contact / FAQ (factice)
+
+En haut à droite : bouton “Inscription / Connexion” si non connecté, sinon affichage du pseudo avec un menu déroulant (profil, déconnexion)
+
+Barre latérale gauche (fixe) — Filtrage
+
+Titre “Filtrer par :”
+
+Catégories : Portable gaming, Portable bureau, Tour gaming, Tour bureau (checkbox)
+
+Marques (cases à cocher) : MSI, Asus, Dell, Lenovo, HP, etc.
+
+Caractéristiques :
+
+CPU : Intel / AMD (cases)
+
+RAM : 8 Go / 16 Go / 32 Go (cases)
+
+GPU : Nvidia / AMD / Intel (cases)
+
+Stockage : SSD / HDD (cases)
+
+Prix : slider de prix (ex: de 500€ à 3000€)
+
+Bouton “Réinitialiser filtres”
+
+Zone principale — Affichage des produits
+
+Grille responsive (3 ou 4 colonnes selon taille écran)
+
+Chaque carte produit comprend :
+
+Image du PC (haute qualité, fond clair)
+
+Nom + marque + modèle en gras
+
+Prix en gros, couleur accentuée (ex : vert ou rouge selon promo fictive)
+
+Courte description : CPU, RAM, GPU, stockage
+
+Bouton “Voir détails” qui ouvre une modale ou page produit détaillée
+
+Tri au-dessus de la grille :
+
+Tri par prix (croissant / décroissant)
+
+Tri par popularité (factice)
+
+Tri par nouveauté (date fictive)
+
+Pagination simple (page 1, 2, 3 ou “Afficher plus”)
+
+2. Page Configuration PC (tour)
+Visuel & Organisation
+Header identique (logo, menu, connexion)
+
+Section Configuration (centrée, fond légèrement gris clair)
+
+Titre clair : “Configurez votre PC Tour personnalisé”
+
+Sous-titres pour chaque composant avec un design en accordéon ou liste claire :
+
+Boîtier
+
+Miniatures des boîtiers (images)
+
+Noms + prix de base
+
+Boutons radio ou sélection
+
+Processeur (CPU)
+
+Liste déroulante avec modèles compatibles (Intel Core i5, i7, Ryzen 5, Ryzen 7)
+
+Prix à côté
+
+Carte Graphique (GPU)
+
+Miniatures ou noms + prix
+
+Nvidia RTX 3060, RTX 3070, AMD RX 6700, etc.
+
+Mémoire RAM
+
+Choix 8, 16, 32 Go
+
+Prix au module
+
+Stockage
+
+SSD 512 Go, 1 To, HDD 1 To, 2 To
+
+Prix selon capacité
+
+Alimentation
+
+Liste simple des alimentations (450W, 650W, 750W) avec prix
+
+Section “Récapitulatif” (fixe à droite ou en bas selon écran)
+
+Liste des composants sélectionnés avec prix
+
+Prix total dynamique qui se met à jour en temps réel
+
+Bouton “Ajouter au panier” (fonction fictive)
+
+Bouton “Sauvegarder ma configuration” (nécessite connexion)
+
+3. Page Détails Produit
+Image agrandie (avec galerie photos factices)
+
+Nom complet + marque + modèle
+
+Prix bien visible
+
+Description détaillée :
+
+CPU
+
+GPU
+
+RAM
+
+Stockage
+
+Dimensions / Poids
+
+Garantie
+
+Bouton “Retour au catalogue”
+
+Bouton “Ajouter au panier” (factice)
+
+Section “Produits similaires” en bas
+
+4. Système d’Authentification
+Page ou modal pop-up simple avec champs :
+
+Email
+
+Mot de passe
+
+Bouton connexion / inscription
+
+Message d’erreur / succès clair et friendly
+
+Après connexion, affichage du pseudo en haut à droite avec dropdown
+
+Possibilité de “Déconnexion”
+
+5. Fonctionnalités annexes & UX
+Filtres dynamiques : au choix des filtres, la liste de produits se met à jour instantanément
+
+Tri & Pagination fluide sans rechargement
+
+Responsive design complet : menu hamburger sur mobile, colonnes adaptatives
+
+Animations légères : sur les boutons, transitions de filtres, hover produit avec ombre et léger zoom image
+
+Mode sombre/claire toggle en bas à droite
+
+Panier factice qui mémorise localement (ex: via localStorage), possibilité d’ajouter/supprimer des produits
+
+Chargement simulé (spinner) pour plus de réalisme lors du changement de page/filtres
+
+Footer simple avec infos légales factices, réseaux sociaux (icônes)
+
+6. Ambiance & Design global
+Palette de couleurs :
+
+Fond clair (#f5f5f7) ou sombre selon mode
+
+Couleur accent principale : bleu électrique ou rouge gaming
+
+Textes noirs/gris foncé pour la lisibilité
+
+Typographie moderne, sans-serif (ex: Poppins, Montserrat)
+
+Interface épurée, claire, pas trop chargée, facile à scanner visuellement
+
+Images produits avec fond blanc ou léger effet d’ombre portée
+
+Utilisation d’icônes simples pour filtres et boutons (ex: filtre, tri, panier)
+
