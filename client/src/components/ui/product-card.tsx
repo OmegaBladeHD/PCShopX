@@ -1,0 +1,48 @@
+import { formatPrice, Product } from "@/lib/utils";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface ProductCardProps {
+  product: Product;
+  onViewDetails: (product: Product) => void;
+}
+
+export function ProductCard({ product, onViewDetails }: ProductCardProps) {
+  return (
+    <Card className="bg-white dark:bg-dark rounded-lg card-shadow card-shadow-hover transition-shadow duration-300 overflow-hidden group h-full flex flex-col">
+      <div className="relative pt-[56.25%] bg-gray-100 dark:bg-gray-800 overflow-hidden">
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+        />
+      </div>
+      <CardContent className="p-4 flex-grow">
+        <h3 className="font-poppins font-semibold text-lg text-gray-900 dark:text-white mb-1">{product.name}</h3>
+        <p className="text-accent dark:text-accent text-xl font-bold mb-2">{formatPrice(product.price)}</p>
+        <div className="space-y-1 mb-4">
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="font-medium">CPU:</span> {product.cpu}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="font-medium">GPU:</span> {product.gpu}
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="font-medium">RAM:</span> {product.ram}GB
+          </p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">
+            <span className="font-medium">Stockage:</span> {product.storage}
+          </p>
+        </div>
+      </CardContent>
+      <CardFooter className="p-4 pt-0">
+        <Button 
+          className="w-full" 
+          onClick={() => onViewDetails(product)}
+        >
+          Voir détails
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+}
