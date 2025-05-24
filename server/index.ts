@@ -54,15 +54,19 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Serve the app on port 5000 (only accessible from localhost)
-  const port = 5000;
-  server.listen(
-    {
-      port,
-      host: "127.0.0.1",
-    },
-    () => {
-      log(`Serving on http://127.0.0.1:${port}`);
+  // PORT et HOST dynamiques
+  const port = parseInt(process.env.PORT || "5000", 10);
+  const host = process.env.HOST || "0.0.0.0";
+
+  server.listen({ port, host }, () => {
+    // Détection d'hébergeur pour affichage propre
+    let url = `http://${host}:${port}`;
+    if (process.env.RENDER_EXTERNAL_URL) {
+      url = `https://${process.env.RENDER_EXTERNAL_URL}`;
+    } else if (process.env.REPL_SLUG && process.env.REPL_OWNER) {
+      url = `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`;
     }
-  );
+
+    log(`Serving on ${url}`);
+  });
 })();
